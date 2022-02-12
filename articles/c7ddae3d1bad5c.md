@@ -214,7 +214,7 @@ function withdraw(uint256 pid, uint256 amount, address to) public {
 1. LPトークンをコントラクトからユーザに送る
 
 
-## LPトークンを引き出す (MiniChefV2.withdrawAndHarvest)
+## LPトークンと報酬を引き出す (MiniChefV2.withdrawAndHarvest)
 :::details withdrawAndHarvest
 ```solidity
     /// @notice Withdraw LP tokens from MCV2 and harvest proceeds for transaction sender to `to`.
@@ -281,11 +281,11 @@ function updatePool(uint256 pid) public returns (PoolInfo memory pool) {
 https://zenn.dev/sakuracase/articles/9a6f6e33d6326c#%E7%8D%B2%E5%BE%97%E5%A0%B1%E9%85%AC%E9%A1%8D%E6%9B%B4%E6%96%B0%E3%81%AE%E4%BB%95%E7%B5%84%E3%81%BF(stakingrewards.updatereward)
 
 - StakingRewardsは事前にトータル報酬額と配布期間を設定して秒間報酬額を算出するが、MiniChefでは秒間報酬額(全プール合計)のみを直接設定する
-    - そのためMiniChefではコントラクト内の報酬が足りなくなり報酬を受け取れない可能性もある
-- MiniChefでは複数LPに対するステーキングが可能となっている。各ステーキングプールにアロケーションポイント（AP）が設定されており、そのプールの報酬はAPシェア率に応じて変わる
+    - そのためMiniChefではコントラクト内の報酬が足りなくなり報酬を受け取れなくなる可能性がある
+- MiniChefでは複数のステーキングプールを作成可能となっている。各ステーキングプールにアロケーションポイント（AP）が設定されており、そのプールの報酬はAPに応じて変わる
     - 秒間報酬 * 対象プールのAP / トータルAP
 
-- LPトークンのステーク総量を`lpToken[pid].balanceOf(address(this));`で取得しているため、add関数のコメントにあるように同じLPトークンをプールに設定すると報酬配布量がおかしくなる(少なくなる)
+- LPトークンのステーク総量を`lpToken[pid].balanceOf(address(this));`で取得しているため、add関数のコメントにあるように同じLPトークンのプールを作成すると報酬配布量がおかしくなる(少なくなる)
 
 
 # Rewarderについて
